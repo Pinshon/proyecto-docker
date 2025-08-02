@@ -1,11 +1,95 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Proyecto Docker</title>
+    <title>Registro de Usuarios</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        input[type="text"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background: white;
+            margin-bottom: 8px;
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .registros {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
 </head>
 <body>
-    <h1>Proyecto Multi-Contenedor</h1>
-    <p>Esta página ha sido visitada {{ hits }} veces.</p>
-    <p>Versión de PostgreSQL: {{ db_version }}</p>
+    <h1>Registra tus datos</h1>
+    <form method="POST" action="/guardar">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        
+        <label for="celular">Número de celular:</label>
+        <input type="tel" id="celular" name="celular" required>
+        
+        <button type="submit">Enviar</button>
+    </form>
+
+    <div class="registros">
+        <h2>Registros:</h2>
+        {% if usuarios %}
+            <ul>
+                {% for usuario in usuarios %}
+                    <li><strong>{{ usuario[1] }}</strong> - {{ usuario[2] }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No hay registros aún.</p>
+        {% endif %}
+    </div>
 </body>
 </html>

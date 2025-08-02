@@ -1,21 +1,17 @@
-version: '3.8'
+version: '3.8'  # <-- ¡Esta línea es crucial!
 
 services:
   web:
     build: .
     ports:
       - "5000:5000"
-    volumes:
-      - ./app:/app
     environment:
       - FLASK_ENV=development
-      - REDIS_HOST=redis
       - POSTGRES_HOST=db
       - POSTGRES_DB=mydb
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
     depends_on:
-      - redis
       - db
 
   db:
@@ -26,24 +22,7 @@ services:
       - POSTGRES_PASSWORD=password
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - "8080:8080"
-    depends_on:
-      - db
-
-  redis:
-    image: redis:alpine
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
+      - ./db_scripts:/docker-entrypoint-initdb.d
 
 volumes:
   postgres_data:
-  redis_data:
